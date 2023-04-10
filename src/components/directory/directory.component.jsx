@@ -31,7 +31,7 @@ const Directory = () => {
   ];
 
   return (
-    <div className='categories-container'>
+    <div className='directory-container'>
       {categories.map(category => (
         // key has to be added here where .map() happens, not where component is defined
         <CategoryItem key={category.id} category={category} />
