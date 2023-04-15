@@ -1,8 +1,15 @@
 import './App.css';
-import Directory from './components/directory/directory.component.jsx';
+import { Outlet } from 'react-router-dom';
+
+import Navigation from './components/navigation/navigation.component.jsx';
 
 const App = () => {
-  return <Directory />;
+  return (
+    <>
+      <Navigation />
+      <Outlet />
+    </>
+  );
 };
 
 export default App;
