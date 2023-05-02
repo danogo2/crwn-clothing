@@ -7,14 +7,15 @@ import { getRedirectResult } from 'firebase/auth';
 // other import
 import {
   auth, // this is also for signing in with redirect, it's singleton that keeps track of all the authentications that has happened, even after we were redirected to another page we still remember about auth that had place before
-  signInWithGooglePopup,
   createUserDocumentFromAuth,
   signInWithGoogleRedirect,
 } from '../../utils/firebase/firebase.utils.js';
 
 import SignUpForm from '../../components/sign-up-form/sign-up-form.component.jsx';
+import SignInForm from '../../components/sign-in-form/sign-in-form.component.jsx';
+import './authentication.styles.scss';
 
-const SignIn = () => {
+const Authentication = () => {
   // FOR REDIRECT ONLY START
   useEffect(() => {
     const logWithGoogleRedirect = async () => {
@@ -27,11 +28,11 @@ const SignIn = () => {
   }, []); // empty array means that it will be called only once when this component mounts for the first time
   // FOR REDIRECT ONLY END
 
-  const logWithGooglePopup = async () => {
-    // destructuring user from the response
-    const { user } = await signInWithGooglePopup();
-    createUserDocumentFromAuth(user);
-  };
+  // const logWithGooglePopup = async () => {
+  //   // destructuring user from the response
+  //   const { user } = await signInWithGooglePopup();
+  //   createUserDocumentFromAuth(user);
+  // };
 
   // FOR REDIRECT ONLY START
   const logWithGoogleRedirect = async () => {
@@ -43,9 +44,8 @@ const SignIn = () => {
   // FOR REDIRECT ONLY END
 
   return (
-    <div>
-      <h1>Sign in page</h1>
-      <button onClick={logWithGooglePopup}>Sign In with google popup</button>
+    <div className='authentication-container'>
+      <SignInForm />
       <SignUpForm />
     </div>
   );
@@ -58,4 +58,4 @@ const SignIn = () => {
   // FOR REDIRECT ONLY END
 };
 
-export default SignIn;
+export default Authentication;

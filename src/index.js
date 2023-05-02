@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './routes/home/home.component.jsx';
 import Shop from './routes/shop/shop.component.jsx';
-import SignIn from './routes/sign-in/sign-in.component.jsx';
+import Authentication from './routes/authentication/authentication.component.jsx';
 
 const router = createBrowserRouter([
   {
@@ -22,8 +22,8 @@ const router = createBrowserRouter([
         element: <Shop />,
       },
       {
-        path: 'sign-in',
-        element: <SignIn />,
+        path: 'auth',
+        element: <Authentication />,
       },
     ],
   },
