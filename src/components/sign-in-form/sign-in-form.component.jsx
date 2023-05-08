@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import {
   signInAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
@@ -7,6 +7,7 @@ import {
 import FormInput from '../form-input/form-input.component';
 import Button from '../button/button.component';
 import './sign-in-form.styles.scss';
+import { UserContext } from '../../contexts/user.context';
 
 const defaultFormFields = {
   email: '',
@@ -17,6 +18,10 @@ const SignInForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
 
+  // getting setCurrentUser state setter from UserContext.Provider
+  // hooking component to the useContext will trigger rerender of this component(runs the whole function again, doesn't repaint any dom if nothing's changed) even if value is not used
+  const { setCurrentUser } = useContext(UserContext);
+
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
   };
@@ -24,9 +29,7 @@ const SignInForm = () => {
   const handleChange = e => {
     const { name, value } = e.target;
     if (value !== '') {
-      console.log(value);
       e.target.classList.add('shrinkLabel');
-      console.log(e.target.classList);
     }
 
     setFormFields({ ...formFields, [name]: value });
@@ -50,6 +53,8 @@ const SignInForm = () => {
         email,
         password
       );
+      // set curretn user so any component in UserContext.Provider has access to this data
+      setCurrentUser(user);
       console.log('Signed in user:', user);
       resetFormFields();
     } catch (error) {

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
@@ -6,6 +6,7 @@ import {
 import FormInput from '../form-input/form-input.component';
 import './sign-up.styles.scss';
 import Button from '../button/button.component.jsx';
+import { UserContext } from '../../contexts/user.context.jsx';
 
 // initial values for form inputs
 const defaultFormFields = {
@@ -18,6 +19,7 @@ const defaultFormFields = {
 const SignUpForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
+  const { setCurrentUser } = useContext(UserContext);
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
@@ -36,6 +38,7 @@ const SignUpForm = () => {
         password
       );
       const { user } = response;
+      setCurrentUser(user);
       createUserDocumentFromAuth(user, { displayName });
       resetFormFields();
     } catch (error) {
@@ -50,9 +53,7 @@ const SignUpForm = () => {
   const handleChange = event => {
     const { name, value } = event.target;
     if (value !== '') {
-      console.log(value);
       event.target.classList.add('shrinkLabel');
-      console.log(event.target.classList);
     }
 
     setFormFields({ ...formFields, [name]: value });

@@ -7,6 +7,7 @@ import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
 } from 'firebase/auth'; // authentication service
 // importing firestore methods
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
@@ -45,19 +46,19 @@ export const createUserDocumentFromAuth = async (
   additionalInformation = {} // if we are signing up with email and password userAuth doesn't have displayName(null) so we are overwriting null value inside the setDoc method with the value from the form
 ) => {
   if (!userAuth) return;
-  console.log(userAuth);
+  // console.log(userAuth);
 
   // create reference for the data in firestore db
   // doc(<database>, <collection>, <document's unique id>)
   const userDocRef = doc(db, 'users', userAuth.uid);
-  console.log(userDocRef);
+  // console.log(userDocRef);
 
   // getting document snapshot
   const userSnapshot = await getDoc(userDocRef);
-  console.log(userSnapshot);
+  // console.log(userSnapshot);
 
   // checking if this document exists in our database
-  console.log(userSnapshot.exists());
+  // console.log(userSnapshot.exists());
 
   // if user data does not exist
   if (!userSnapshot.exists()) {
@@ -93,3 +94,5 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) => {
   if (!email || !password) return;
   return await signInWithEmailAndPassword(auth, email, password);
 };
+
+export const signOutUser = async () => await signOut(auth);

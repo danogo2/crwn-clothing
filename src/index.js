@@ -7,11 +7,16 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './routes/home/home.component.jsx';
 import Shop from './routes/shop/shop.component.jsx';
 import Authentication from './routes/authentication/authentication.component.jsx';
+import { UserProvider } from './contexts/user.context';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
+    element: (
+      <UserProvider>
+        <App />
+      </UserProvider>
+    ),
     children: [
       {
         path: '/',

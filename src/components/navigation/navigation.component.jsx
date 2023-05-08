@@ -1,8 +1,22 @@
 import { NavLink } from 'react-router-dom';
 import { ReactComponent as CrwnLogo } from '../../assets/crown.svg';
 import './navigation.styles.scss';
+//imports needed to get currently logged in user from context and change Sign In to Sign Out
+import { useContext } from 'react';
+import { UserContext } from '../../contexts/user.context';
+import { signOutUser } from '../../utils/firebase/firebase.utils';
 
 const Navigation = () => {
+  // useContext triggers rerender whenever value inside this useContext hook changes (here when currentUser has changed)
+  const { currentUser, setCurrentUser } = useContext(UserContext);
+
+  const signOutUserHandler = async () => {
+    // wait till user is signed out, we don't have to catch any value because it return undefined after is finished
+    await signOutUser();
+    // and clear context, setting user to null (so it will show Sign in again)
+    setCurrentUser(null);
+  };
+
   return (
     <nav className='navigation'>
       <NavLink className='logo-container' to='/'>
@@ -12,9 +26,17 @@ const Navigation = () => {
         <NavLink className='nav-link' to='/shop'>
           <div>shop</div>
         </NavLink>
-        <NavLink className='nav-link' to='/auth'>
-          Sign In
-        </NavLink>
+
+        {currentUser ? (
+          <span className='nav-link' onClick={signOutUserHandler}>
+            {/*if there is a user show sign out link, otherwise show sign in link */}
+            Sign Out
+          </span>
+        ) : (
+          <NavLink className='nav-link' to='/auth'>
+            Sign In
+          </NavLink>
+        )}
       </div>
     </nav>
   );
