@@ -32,7 +32,7 @@ const Authentication = () => {
   //   // destructuring user from the response
   //   const { user } = await signInWithGooglePopup();
   //   createUserDocumentFromAuth(user);
-  // };
+  // }; // moved to sign-in-form
 
   // FOR REDIRECT ONLY START
   const logWithGoogleRedirect = async () => {

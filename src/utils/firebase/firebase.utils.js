@@ -8,6 +8,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  onAuthStateChanged,
 } from 'firebase/auth'; // authentication service
 // importing firestore methods
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
@@ -31,6 +32,7 @@ googleProvider.setCustomParameters({
 });
 
 // one auth per application
+// auth keeps track whether user is signed in or signed out, it holds to this info between page refreshes
 export const auth = getAuth(); // console.firebase.google.com/ =>  Authentication page => choose Sign in option (google)
 export const signInWithGooglePopup = () =>
   signInWithPopup(auth, googleProvider);
@@ -40,6 +42,7 @@ export const signInWithGoogleRedirect = () =>
 // creating databae
 export const db = getFirestore();
 
+// HELPER functions
 // getting data from authentication service (that is in sign-in.component.jsx) and storing it into the firebase
 export const createUserDocumentFromAuth = async (
   userAuth,
@@ -96,3 +99,8 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) => {
 };
 
 export const signOutUser = async () => await signOut(auth);
+
+// observer listening to user actions, onAuthStateChange(auth, callback that runs whenever auth's state changes (sign in / sign out))
+// onAuthStateChanged returns unsubscribe method that stops observing, should be called on unmount (useEffect callback return)
+export const onAuthStateChangedListener = callback =>
+  onAuthStateChanged(auth, callback); //

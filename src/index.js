@@ -8,13 +8,19 @@ import Home from './routes/home/home.component.jsx';
 import Shop from './routes/shop/shop.component.jsx';
 import Authentication from './routes/authentication/authentication.component.jsx';
 import { UserProvider } from './contexts/user.context';
+import { ProductsProvider } from './contexts/products.context';
+import { CartProvider } from './contexts/cart.context';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: (
       <UserProvider>
-        <App />
+        <ProductsProvider>
+          <CartProvider>
+            <App />
+          </CartProvider>
+        </ProductsProvider>
       </UserProvider>
     ),
     children: [

@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext } from 'react'; // don't need useContext, firebase auth state observer has it covered
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
@@ -6,7 +6,7 @@ import {
 import FormInput from '../form-input/form-input.component';
 import './sign-up.styles.scss';
 import Button from '../button/button.component.jsx';
-import { UserContext } from '../../contexts/user.context.jsx';
+// import { UserContext } from '../../contexts/user.context.jsx'; // don't need, firebase auth state observer has it covered
 
 // initial values for form inputs
 const defaultFormFields = {
@@ -19,7 +19,7 @@ const defaultFormFields = {
 const SignUpForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
-  const { setCurrentUser } = useContext(UserContext);
+  // const { setCurrentUser } = useContext(UserContext); // don't need, firebase auth state observer has it covered
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
@@ -38,7 +38,7 @@ const SignUpForm = () => {
         password
       );
       const { user } = response;
-      setCurrentUser(user);
+      // setCurrentUser(user); // don't need, firebase auth state observer has it covered
       createUserDocumentFromAuth(user, { displayName });
       resetFormFields();
     } catch (error) {

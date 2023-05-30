@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext } from 'react'; // don't need useContext, firebase auth state observer has it covered
 import {
   signInAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
@@ -7,7 +7,7 @@ import {
 import FormInput from '../form-input/form-input.component';
 import Button from '../button/button.component';
 import './sign-in-form.styles.scss';
-import { UserContext } from '../../contexts/user.context';
+// import { UserContext } from '../../contexts/user.context'; // don't need, firebase auth state observer has it covered
 
 const defaultFormFields = {
   email: '',
@@ -20,7 +20,7 @@ const SignInForm = () => {
 
   // getting setCurrentUser state setter from UserContext.Provider
   // hooking component to the useContext will trigger rerender of this component(runs the whole function again, doesn't repaint any dom if nothing's changed) even if value is not used
-  const { setCurrentUser } = useContext(UserContext);
+  // const { setCurrentUser } = useContext(UserContext); // don't need, firebase auth state observer has it covered
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
@@ -54,8 +54,7 @@ const SignInForm = () => {
         password
       );
       // set curretn user so any component in UserContext.Provider has access to this data
-      setCurrentUser(user);
-      console.log('Signed in user:', user);
+      // setCurrentUser(user); // don't need, firebase auth state observer has it covered
       resetFormFields();
     } catch (error) {
       switch (error.code) {
