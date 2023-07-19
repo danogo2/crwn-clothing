@@ -11,7 +11,17 @@ import {
   onAuthStateChanged,
 } from 'firebase/auth'; // authentication service
 // importing firestore methods
-import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  // both methods below are needed to upload SHOP_DATA to respective collections in firestore database
+  collection,
+  writeBatch,
+  getDocs,
+  query,
+} from 'firebase/firestore';
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: 'AIzaSyCr93qFIRcK-sD1Y7Z571HeZw9x5TCD9UY',
@@ -42,6 +52,52 @@ export const signInWithGoogleRedirect = () =>
 // creating databae
 export const db = getFirestore();
 
+// method to upload data(category objects from SHOP_DATA) as documents to collections in firestore db
+/* EXAMPLE OF DB STRUCTURE: 
+  collection (eg. users, categories) 
+=>
+  document (eg. womens, hats, jackets, userId_JK893BJSA675) 
+ => 
+  {createdAt: May 14, 2023 at 12:24:19 PM UTC+2, displayname: "danogo", email: "xdoggen@gmail.com"}
+  */
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd
+) => {
+  // getting specific collection from db
+  const collectionRef = collection(db, collectionKey);
+  // transaction, all actions batched together
+  const batch = writeBatch(db);
+  // setting all objects as documents in firebase collection through attaching batch.set(docRef, obj) to every obj
+  objectsToAdd.forEach(obj => {
+    // docRef points us to the specific location for title key inside of collectionRef
+    //here collectionsRef knows which db we're using from specifying it above, no need to specify db again
+    const docRef = doc(collectionRef, obj.title.toLowerCase());
+    // set docRef location with the value of obj
+    batch.set(docRef, obj);
+  });
+
+  // awaiting for batched actions to complete
+  await batch.commit();
+  console.log('done');
+};
+
+// method to get data from firebase
+export const getCategoriesAndDocuments = async () => {
+  const collectionRef = collection(db, 'categories');
+  //generate query
+  const q = query(collectionRef);
+  // fetch document snapshots(data itself)
+  const querySnapshot = await getDocs(q); //<Array>
+
+  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+    const { title, items } = docSnapshot.data();
+    acc[title.toLowerCase()] = items;
+    return acc;
+  }, {});
+  return categoryMap;
+};
+
 // HELPER functions
 // getting data from authentication service (that is in sign-in.component.jsx) and storing it into the firebase
 export const createUserDocumentFromAuth = async (
@@ -52,7 +108,7 @@ export const createUserDocumentFromAuth = async (
   // console.log(userAuth);
 
   // create reference for the data in firestore db
-  // doc(<database>, <collection>, <document's unique id>)
+  // doc(<database/collection_ref>, <collection_title>, <document's_unique_id>)
   const userDocRef = doc(db, 'users', userAuth.uid);
   // console.log(userDocRef);
 

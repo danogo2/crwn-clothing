@@ -96,7 +96,7 @@ const SignUpForm = () => {
           onChange={handleChange}
           value={confirmPassword}
         />
-        <Button buttonType='default' type='submit'>
+        <Button buttonType='base' type='submit'>
           Submit
         </Button>
       </form>

@@ -5,7 +5,7 @@ import {
   signInWithGooglePopup,
 } from '../../utils/firebase/firebase.utils';
 import FormInput from '../form-input/form-input.component';
-import Button from '../button/button.component';
+import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
 import './sign-in-form.styles.scss';
 // import { UserContext } from '../../contexts/user.context'; // don't need, firebase auth state observer has it covered
 
@@ -79,6 +79,7 @@ const SignInForm = () => {
       <span>Sign in with your email and password</span>
       <form onSubmit={handleFormSubmit}>
         <FormInput
+          id='email-sign-in'
           label='email'
           required
           type='email'
@@ -87,6 +88,7 @@ const SignInForm = () => {
           value={email}
         />
         <FormInput
+          id='password-sign-in'
           label='password'
           required
           type='password'
@@ -96,7 +98,11 @@ const SignInForm = () => {
         />
         <div className='buttons-container'>
           <Button type='submit'>Submit</Button>
-          <Button type='button' buttonType='google' onClick={signInWithGoogle}>
+          <Button
+            type='button'
+            buttonType={BUTTON_TYPE_CLASSES.google}
+            onClick={signInWithGoogle}
+          >
             Google Sign in
           </Button>
         </div>

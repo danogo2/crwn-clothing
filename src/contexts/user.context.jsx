@@ -24,12 +24,13 @@ export const UserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const value = { currentUser, setCurrentUser };
   // sign out when this component mounts. It is needed because our auth singleton remembers that we are logged in even after page refresh
-  signOutUser();
+  // signOutUser();
   // when this component mounts set auth state change observer, has to be cleared when component unmounts to prevent memory leak
   useEffect(() => {
     const unsubscribe = onAuthStateChangedListener(user => {
       // user is a user value provided by onAuthStateChanged
       // this callback is called first when observer is set during the component mount and then on every auth state change
+      console.log(user);
       if (user) {
         createUserDocumentFromAuth(user);
       }

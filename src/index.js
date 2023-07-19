@@ -9,19 +9,21 @@ import Shop from './routes/shop/shop.component.jsx';
 import Authentication from './routes/authentication/authentication.component.jsx';
 import Checkout from './routes/checkout/checkout.component';
 import { UserProvider } from './contexts/user.context';
-import { ProductsProvider } from './contexts/products.context';
+import { CategoriesProvider } from './contexts/categories.context';
 import { CartProvider } from './contexts/cart.context';
+import CategoriesPreview from './components/categories-preview/categories-preview.component';
+import Category from './routes/category/category.component';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: (
       <UserProvider>
-        <ProductsProvider>
+        <CategoriesProvider>
           <CartProvider>
             <App />
           </CartProvider>
-        </ProductsProvider>
+        </CategoriesProvider>
       </UserProvider>
     ),
     children: [
@@ -30,8 +32,18 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: 'shop',
+        path: 'shop/*',
         element: <Shop />,
+        children: [
+          { path: '', element: <CategoriesPreview /> },
+          {
+            path: ':category',
+            loader: async ({ params }) => {
+              return params.category;
+            },
+            element: <Category />,
+          },
+        ],
       },
       {
         path: 'auth',
