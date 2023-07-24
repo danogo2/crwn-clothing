@@ -1,4 +1,6 @@
-.categories-preview-container {
+import styled from 'styled-components';
+
+export const CategoriesPreviewContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -7,4 +9,4 @@
 
   position: relative;
   padding-bottom: 3rem;
-}
+`;

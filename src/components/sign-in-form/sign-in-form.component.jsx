@@ -6,7 +6,7 @@ import {
 } from '../../utils/firebase/firebase.utils';
 import FormInput from '../form-input/form-input.component';
 import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
-import './sign-in-form.styles.scss';
+import { SignInContainer } from './sign-in-form.styles.jsx';
 // import { UserContext } from '../../contexts/user.context'; // don't need, firebase auth state observer has it covered
 
 const defaultFormFields = {
@@ -74,7 +74,7 @@ const SignInForm = () => {
   };
 
   return (
-    <div className='sign-in-container'>
+    <SignInContainer>
       <h2>I already have an account</h2>
       <span>Sign in with your email and password</span>
       <form onSubmit={handleFormSubmit}>
@@ -107,7 +107,7 @@ const SignInForm = () => {
           </Button>
         </div>
       </form>
-    </div>
+    </SignInContainer>
   );
 };
 

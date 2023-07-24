@@ -1,24 +1,26 @@
-.category-container {
+import styled from 'styled-components';
+
+export const CategoryContainer = styled.div`
   padding: 1rem 3rem 3rem;
   background-color: #3a3a3a;
-}
+`;
 
-.category-products {
+export const CategoryProducts = styled.div`
   display: grid;
   gap: 30px;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   // grid-template-columns: repeat(4, minmax(200px, 250px));
   justify-content: start;
-}
+`;
 
-.category-product-title-container {
+export const CategoryProductTitleContainer = styled.h2`
   margin: 1rem 0 2rem 0;
   width: 100%;
   display: flex;
   justify-content: flex-start;
-}
+`;
 
-.category-product-title {
+export const CategoryProductTitle = styled.span`
   text-align: center;
   font-size: 4rem;
   font-weight: 700;
@@ -32,4 +34,4 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   filter: drop-shadow(0px 4px 2px rgba(10, 210, 210, 0.8));
-}
+`;

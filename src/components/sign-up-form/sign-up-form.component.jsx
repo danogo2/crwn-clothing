@@ -1,10 +1,10 @@
-import { useState, useContext } from 'react'; // don't need useContext, firebase auth state observer has it covered
+import { useState } from 'react'; // don't need useContext, firebase auth state observer has it covered
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
 } from '../../utils/firebase/firebase.utils';
 import FormInput from '../form-input/form-input.component';
-import './sign-up.styles.scss';
+import { SignUpContainer } from './sign-up.styles.jsx';
 import Button from '../button/button.component.jsx';
 // import { UserContext } from '../../contexts/user.context.jsx'; // don't need, firebase auth state observer has it covered
 
@@ -60,7 +60,7 @@ const SignUpForm = () => {
   };
 
   return (
-    <div className='sign-up-container'>
+    <SignUpContainer>
       <h2>I don't have an account?</h2>
       <span>Sign up with your email and password</span>
       <form onSubmit={handleFormSubmit}>
@@ -100,7 +100,7 @@ const SignUpForm = () => {
           Submit
         </Button>
       </form>
-    </div>
+    </SignUpContainer>
   );
 };
 

@@ -1,4 +1,4 @@
-import './categories-preview.styles.scss';
+import { CategoriesPreviewContainer } from './categories-preview.styles.jsx';
 import { useContext } from 'react';
 
 import { CategoriesContext } from '../../contexts/categories.context';
@@ -7,7 +7,7 @@ import CategoryPreview from '../../components/category-preview/category-preview.
 const CategoriesPreview = () => {
   const { categoriesMap } = useContext(CategoriesContext);
   return (
-    <div className='categories-preview-container'>
+    <CategoriesPreviewContainer>
       {Object.keys(categoriesMap).map(title => (
         <CategoryPreview
           key={title}
@@ -15,7 +15,7 @@ const CategoriesPreview = () => {
           products={categoriesMap[title]}
         />
       ))}
-    </div>
+    </CategoriesPreviewContainer>
   );
 };
 

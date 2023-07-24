@@ -13,7 +13,9 @@ import {
 } from '../utils/firebase/firebase.utils';
 
 // ################ User Context ##############
-// treat as actual value you want to access
+
+// createContext(defaultValue)
+// defaultValue: The value that you want the context to have when there is no matching context provider in the tree above the component that reads context. If you don’t have any meaningful default value, specify null. The default value is meant as a “last resort” fallback. It is static and never changes over time.
 export const UserContext = createContext({
   currentUser: null,
   setCurrentUser: () => null,
@@ -22,9 +24,10 @@ export const UserContext = createContext({
 export const UserProvider = ({ children }) => {
   // UserProvider allows any of its children to have access to its useState values
   const [currentUser, setCurrentUser] = useState(null);
+  // value that we pass to our Provider that we want all of its children to have access to
   const value = { currentUser, setCurrentUser };
   // sign out when this component mounts. It is needed because our auth singleton remembers that we are logged in even after page refresh
-  // signOutUser();
+  // signOutUser(); // doesn't work
   // when this component mounts set auth state change observer, has to be cleared when component unmounts to prevent memory leak
   useEffect(() => {
     const unsubscribe = onAuthStateChangedListener(user => {
