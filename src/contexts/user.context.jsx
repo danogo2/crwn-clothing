@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect, useReducer } from 'react';
+import { createContext, useEffect, useReducer } from 'react';
 /* createContext is a way to share data between components without having to pass down props manually at every level of the component tree. 
   Call createContext outside of any components to create a context.
   const SomeContext = createContext(null); //createContext(<default_value>) set default value to null if there isn't any
@@ -8,9 +8,10 @@ import { createContext, useState, useEffect, useReducer } from 'react';
 */
 import {
   onAuthStateChangedListener,
-  signOutUser,
   createUserDocumentFromAuth,
 } from '../utils/firebase/firebase.utils';
+
+import { createAction } from '../utils/reducer/reducer.utils';
 
 // ################ User Context ##############
 
@@ -47,7 +48,7 @@ export const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(userReducer, INITIAL_STATE);
   const { currentUser } = state;
   const setCurrentUser = user => {
-    dispatch({ type: 'SET_CURRENT_USER', payload: user });
+    dispatch(createAction('SET_CURRENT_USER', user));
   };
 
   // value that we pass to our Provider that we want all of its children to have access to
